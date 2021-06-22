@@ -1,18 +1,25 @@
 {
   "name": "angularapp",
   "version": "0.0.0",
+  "engines": {
+    "node": "14.17.0",
+    "npm": "6.14.13"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.0.1",
     "@angular/cdk": "^12.0.2",
     "@angular/common": "~12.0.1",
+    "@angular/cli": "~12.0.1",
+    "@angular/compiler-cli": "~12.0.1",
     "@angular/compiler": "~12.0.1",
     "@angular/core": "~12.0.1",
     "@angular/forms": "~12.0.1",
@@ -30,7 +37,8 @@
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "xlsx": "^0.17.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "typescript": "^4.2.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.0.1",
