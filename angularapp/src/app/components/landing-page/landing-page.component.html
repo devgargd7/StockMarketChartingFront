@@ -1,0 +1,22 @@
+<div *ngIf="currentUser else ElseBlock" >
+  <div *ngIf="currentUser.userType == 'USER'">
+    <h2>Funtions To perform:</h2>
+    <ul>
+      <li>List IPOs</li>
+      <li>Compare Companies/Sectors</li>
+      <li>View Profile</li>
+    </ul>
+  </div>
+  <div *ngIf="currentUser.userType == 'ADMIN'">
+    <h2>Funtions To perform:</h2>
+    <ul>
+      <li>Import Data</li>
+      <li>Add/List IPOs</li>
+      <li>Add/List Companies</li>
+      <li>Add/List Stock Exchanges</li>
+    </ul>
+  </div>
+</div>
+<ng-template #ElseBlock>
+  Login or Register to continue.
+</ng-template>

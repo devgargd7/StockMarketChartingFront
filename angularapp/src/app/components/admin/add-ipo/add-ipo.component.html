@@ -1,0 +1,132 @@
+<div class="card col-md-8 offset-md-2 mt-3" >
+    <div class="card-body">
+        <ng-content></ng-content>
+    <h1 class="card-title"> <i class="fa fa-lock"></i>ADD IPO.</h1>
+
+      <form [formGroup]="addIPOForm" >
+        <div class="row">
+
+            <div class="form-floating mb-3 col-md-6">   
+                <!-- <input class="form-control" list="datalistOptions" [ngClass]="{ 'is-invalid': this.addIPOForm.get('companyName').invalid && this.addIPOForm.get('companyName').touched}"
+                 id="companyName" placeholder="Select company" formControlName="companyName" required>
+                 <label for="companyName">Select company</label>
+                <datalist id="datalistOptions"><option *ngFor="let company of companies" value="{{ company.companyName }}">{{ company.companyName }}</option>
+                </datalist>
+                <div *ngIf="this.addIPOForm.get('companyName').invalid && (this.addIPOForm.get('companyName').dirty || this.addIPOForm.get('companyName').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="this.addIPOForm.get('companyName').errors?.required">
+                        company is required.
+                    </div>
+                </div> -->
+
+                
+                <input id="typeahead-prevent-manual-entry"  type="text" class="form-control" [ngClass]="{ 'is-invalid': this.addIPOForm.get('companyName').invalid && this.addIPOForm.get('companyName').touched}"
+                    formControlName="companyName" [ngbTypeahead]="search" [inputFormatter]="formatter" [resultFormatter]="formatter" [editable]='false' required/>
+                <label for="typeahead-prevent-manual-entry">Search for a company:</label>
+                <div *ngIf="this.addIPOForm.get('companyName').invalid && (this.addIPOForm.get('companyName').dirty || this.addIPOForm.get('companyName').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="this.addIPOForm.get('companyName').errors?.required">
+                        company is required.
+                    </div>
+                </div> 
+            </div>
+
+            <div class="form-floating mb-3 col-md-6">   
+                <!-- <select class="form-control form-select"  [ngClass]="{ 'is-invalid': this.addIPOForm.get('stockExchanges').invalid && this.addIPOForm.get('stockExchanges').touched}"
+                 id="stockExchanges" placeholder="Select stockExchanges" formControlName="stockExchanges" required>
+                    <option *ngFor="let se of stockExchanges" value="{{ se.stockExchangeName }}">{{ se.stockExchangeName }}</option>
+                </select> -->
+                <input class="form-control" type="text" [ngClass]="{ 'is-invalid': this.addIPOForm.get('stockExchanges').invalid && this.addIPOForm.get('stockExchanges').touched}"
+                id="stockExchanges" placeholder="Select stockExchanges" formControlName="stockExchanges" required  readonly="readonly"> 
+                <label for="stockExchanges">Select stockExchange</label>
+                <div class="conatiner" style="overflow-x:auto;overflow-y:hidden; white-space: nowrap;">
+                    <div class="form-check-inline float-none" *ngFor="let se of stockExchanges; let i=index;">
+                        <input type="checkbox" (click) = "setStockExchanges(se.stockExchangeName,$event.target)">
+                        {{se.stockExchangeName}}
+                    </div>
+                    
+                </div>
+                <div *ngIf="this.addIPOForm.get('stockExchanges').invalid && (this.addIPOForm.get('stockExchanges').dirty || this.addIPOForm.get('stockExchanges').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="this.addIPOForm.get('stockExchanges').errors?.required">
+                        stockExchange is required.
+                    </div>
+                </div>
+            </div>
+
+
+        
+
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control"  [ngClass]="{ 'is-invalid': this.addIPOForm.get('totalNumberOfShares').invalid && this.addIPOForm.get('totalNumberOfShares').touched}"
+                id="totalNumberOfShares" formControlName="totalNumberOfShares" placeholder="totalNumberOfShares">
+            <label for="totalNumberOfShares">totalNumberOfShares</label>
+            <div *ngIf="this.addIPOForm.get('totalNumberOfShares').invalid && (this.addIPOForm.get('totalNumberOfShares').dirty || this.addIPOForm.get('totalNumberOfShares').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="this.addIPOForm.get('totalNumberOfShares').errors?.required">
+                        totalNumberOfShares is required.
+                    </div>
+                    <div *ngIf="this.addIPOForm.get('totalNumberOfShares').errors?.pattern">
+                        totalNumberOfShares contains only numbers.
+                    </div>
+                </div>
+        </div>
+
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control"  [ngClass]="{ 'is-invalid': this.addIPOForm.get('pricePerShare').invalid && this.addIPOForm.get('pricePerShare').touched}"
+                id="pricePerShare" formControlName="pricePerShare" placeholder="pricePerShare">
+            <label for="pricePerShare">pricePerShare</label>
+            <div *ngIf="this.addIPOForm.get('pricePerShare').invalid && (this.addIPOForm.get('pricePerShare').dirty || this.addIPOForm.get('pricePerShare').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="this.addIPOForm.get('pricePerShare').errors?.required">
+                        pricePerShare is required.
+                    </div>
+                    <div *ngIf="this.addIPOForm.get('pricePerShare').errors?.pattern">
+                        pricePerShare contains only numbers.
+                    </div>
+                </div>
+        </div>
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control form-control-plaintext"  [ngClass]="{ 'is-invalid': this.addIPOForm.get('openDateTime').invalid}"
+            id="openDateTime" formControlName="openDateTime" placeholder="openDateTime" readonly required>
+                <label for="openDateTime">openDateTime</label>
+                <div *ngIf="this.addIPOForm.get('openDateTime').invalid && (this.addIPOForm.get('openDateTime').dirty || this.addIPOForm.get('openDateTime').touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="this.addIPOForm.get('openDateTime').errors?.required">
+                            openDateTime is required.
+                        </div>
+                    </div>
+                    <form class="form-inline mt-2">
+                        <div class="form-group">
+                          <div class="input-group mx-3">
+                            <input class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="model" [ngModelOptions]="{standalone: true}"
+                             (ngModelChange)="setOpenDateTime()" name="dp"  ngbDatepicker #d="ngbDatepicker">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                <i class="bi bi-calendar"></i>
+                              </button>
+                              
+                            </div>
+                            <ngb-timepicker class="mx-3 mt-1" [(ngModel)]="time" [ngModelOptions]="{standalone: true}" [spinners]="false" (ngModelChange)="setOpenDateTime()"></ngb-timepicker>
+                          </div>
+                        </div>
+                      </form>
+        </div>
+        <div class="form-floating mb-3 col-md-6">
+            <textarea type="text" class="form-control" style="height: 100px" [ngClass]="{ 'is-invalid': this.addIPOForm.get('remarks').invalid}"
+                id="remarks" formControlName="remarks" placeholder="remarks"></textarea>
+            <label for="remarks">remarks</label>
+            <div *ngIf="this.addIPOForm.get('remarks').invalid && (this.addIPOForm.get('remarks').dirty || this.addIPOForm.get('remarks').touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="this.addIPOForm.get('remarks').errors?.required">
+                        remarks is required.
+                    </div>
+                </div>
+        </div> 
+       
+        <button class="btn btn-primary rounded-pill" [disabled]="!addIPOForm.valid" (click)="onSubmit()">Submit</button> 
+    </div>
+    </form>
+    
+</div>
+</div>

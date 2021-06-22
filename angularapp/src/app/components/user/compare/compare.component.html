@@ -1,0 +1,22 @@
+<div class="d-flex justify-content-evenly my-3">
+    <button class="btn btn-primary " (click)="changeCompareFormType('company')"><i class="bi bi-plus"></i>Add Company</button>
+    <button class="btn btn-primary " (click)="changeCompareFormType('sector')"><i class="bi bi-plus"></i>Add Sector</button>
+  </div>
+  
+  <app-compare-form *ngIf="showCompareForm" [compareType]="addCompareFormType" [setPeriod]="periodFix" 
+    (successSubmission)="addedComponent($event)" (successSubmissionPeriodFix)="setPeriod($event)"></app-compare-form>
+  
+  
+  
+  <div *ngIf="caption!=''">
+  
+    <div class="container d-flex justify-content-around mt-3">
+      <span>Select Chart Type</span>
+      <div class="form-check"><input class="form-check-input" type="radio" required name='chartType' value='mscolumn2d' [(ngModel)]='chartType'>mscolumn2d</div>
+      <div class="form-check"><input class="form-check-input" type="radio" required name='chartType' value='msline' [(ngModel)]='chartType'>msline</div>
+      <div class="form-check"><input class="form-check-input" type="radio" required name='chartType' value='msbar2d' [(ngModel)]='chartType'>msbar2d</div>
+      <div class="form-check"><input class="form-check-input" type="radio" required name='chartType' value='msarea' [(ngModel)]='chartType'>msarea</div>
+      </div>
+  
+    <fusioncharts width="100%" height="100%" type={{chartType}} [dataSource]="dataSource"></fusioncharts>
+  </div>

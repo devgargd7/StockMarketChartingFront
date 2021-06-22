@@ -1,0 +1,155 @@
+<div class="card col-md-8 offset-md-2 mt-3" >
+    <div class="card-body">
+        <ng-content></ng-content>
+    <h1 class="card-title">
+        <span *ngIf="update == true">UPDATE COMPANY.</span> 
+        <span *ngIf="update == false">ADD COMPANY.</span> 
+    </h1>
+        
+    <!-- <div class="mb-3 col-md-6">
+        <div *ngFor="let fg of cSEMap.controls; let i=index">
+            <div class="form-group" [formGroup] = "getfgat(i)" >
+                <input type="checkbox" formControlName="se" />{{ stockExchanges[i].stockExchangeName}}
+                <input type="text" formControlName="stockCode" placeholder="Stock Code Here" />
+            </div>
+        </div>
+    </div> -->
+
+    <form [formGroup]="addCompanyForm" >
+    <!-- (ngSubmit)="$event.preventDefault();onSubmit();"> -->
+        <div class="row">
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control" [ngClass]="{ 'is-invalid': this.addCompanyForm.get('companyName').invalid && this.addCompanyForm.get('companyName').touched}"
+                formControlName="companyName" id="companyName" placeholder="Company Name" required >
+            <label for="companyName">Company Name</label>
+            <div *ngIf="this.addCompanyForm.get('companyName').invalid && (this.addCompanyForm.get('companyName').dirty || this.addCompanyForm.get('companyName').touched)"
+                class="invalid-feedback">
+                <div *ngIf="this.addCompanyForm.get('companyName').errors?.required">
+                    Company Name is required.
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control"  [ngClass]="{ 'is-invalid': this.addCompanyForm.get('stockCode').invalid && this.addCompanyForm.get('stockCode').touched}"
+                id="stockCode" formControlName="stockCode" placeholder="stockCode" required>
+            <label for="stockCode">stockCode</label>
+            <div *ngIf="this.addCompanyForm.get('stockCode').invalid && (this.addCompanyForm.get('stockCode').dirty || this.addCompanyForm.get('stockCode').touched)"
+                class="invalid-feedback">
+                <div *ngIf="this.addCompanyForm.get('stockCode').errors?.required">
+                    stockCode is required.
+                </div>
+                <div *ngIf="this.addCompanyForm.get('stockCode').errors?.pattern">
+                    stockCode contains only numbers.
+                </div>
+            </div>
+        </div> -->
+<!-- get exchanges from server -->
+        <!-- <div ><label *ngFor="let se of stockExchanges;" class="btn btn-primary d-inline" (click)="addStockExchange( se.stockExchange );" id="{{ se.stockExchange+'btn' }}">
+            {{ se.stockExchange }}
+        </label></div> -->
+        <div class="form-floating mb-3 col-md-6">   
+            <input class="form-control" type="text" [ngClass]="{ 'is-invalid': this.addCompanyForm.get('stockExchanges').invalid && this.addCompanyForm.get('stockExchanges').touched}"
+             id="stockExchanges" placeholder="Select stockExchanges" formControlName="stockExchanges" required readonly="readonly"> 
+            <label for="stockExchanges">Select stockExchange</label>
+            <div class="conatiner" style="overflow-x:auto;overflow-y:hidden; white-space: nowrap;">
+                <!-- <div class="form-check-inline float-none" *ngFor="let se of stockExchanges; let i=index;">
+                    <input type="checkbox" (click) = "setStockExchanges(se.stockExchangeName,$event.target)">
+                    {{se.stockExchangeName}}
+                    <input type="text" class="form-control" placeholder="Stock Code">
+                </div> -->
+                <div *ngIf="stockExchanges && stockExchanges.length">
+                <div class="form-check-inline float-none" *ngFor="let fg of cSEMap.controls; let i=index">
+                    <div class="form-group" [formGroup] = "getfgat(i)" >
+                        <input type="checkbox" formControlName="se" (click) = "setStockExchanges(stockExchanges[i].stockExchangeName,$event.target)" />
+                        {{ stockExchanges[i].stockExchangeName}}
+                        <input type="text" formControlName="stockCode" placeholder="Stock Code Here" />
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- <div style="overflow-x:auto;overflow-y:hidden;"><label *ngFor="let se of stockExchanges;" class="btn btn-primary d-inline" (click)="addStockExchange( se.stockExchangeName );" id="{{ se.stockExchangeName+'btn' }}">
+                {{ se.stockExchangeName }}
+            </label></div> -->
+            <!-- <span>stockExchanges:</span> -->
+             <!-- <div class="conatiner" style="overflow-x:auto;overflow-y:hidden; white-space: nowrap;">
+                <div *ngFor="let se of addCompanyForm.get('stockExchanges').value.controls; let i=index;">
+                    <input type="checkbox" [formControl]="se">
+                    {{stockExchanges[i].stockExchangeName}}
+                  </div>
+            </div> -->
+            <!-- <div class="conatiner" style="overflow-x:auto;overflow-y:hidden; white-space: nowrap;">
+            <div class="form-check form-check-inline float-none"  *ngFor="let se of stockExchanges;">
+                <input class="form-check-input" type="checkbox" id="{{ se.stockExchangeName }}" value="{{ se.stockExchangeName }}">
+                <label class="form-check-label" for="{{ se.stockExchangeName }}">{{ se.stockExchangeName }}</label>
+              </div>
+            </div> -->
+            <div *ngIf="this.addCompanyForm.get('stockExchanges').invalid && (this.addCompanyForm.get('stockExchanges').dirty || this.addCompanyForm.get('stockExchanges').touched)"
+                class="invalid-feedback">
+                <div *ngIf="this.addCompanyForm.get('stockExchanges').errors?.required">
+                    stockExchanges is required.
+                </div>
+            </div>
+        </div>
+
+        
+        
+<!-- get sectors -->
+        <!-- <div ><label *ngFor="let sector of sectors;" class="btn btn-primary d-inline" (click)="addSector( sector.name );" id="{{ sector.name+'btn' }}">
+            {{ sector.name }}
+        </label></div> -->
+        <div class="form-floating mb-3 col-md-6">   
+            <select class="form-control form-select"  [ngClass]="{ 'is-invalid': this.addCompanyForm.get('sector').invalid && this.addCompanyForm.get('sector').touched}"
+             id="sector" placeholder="Select sector" formControlName="sector" required>
+            <!-- <datalist id="sectorOptions" > -->
+                <option selected>Open this select menu</option>
+                <option *ngFor="let sector of sectors" value="{{ sector.sectorName }}">{{ sector.sectorName }}</option>
+            <!-- </datalist> -->
+            </select>
+            <label for="sector">Select sector</label>
+            <div *ngIf="this.addCompanyForm.get('sector').invalid && (this.addCompanyForm.get('sector').dirty || this.addCompanyForm.get('sector').touched)"
+                class="invalid-feedback">
+                <div *ngIf="this.addCompanyForm.get('sector').errors?.required">
+                    sector is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control" [ngClass]="{ 'is-invalid': this.addCompanyForm.get('turnover').invalid}"
+                id="turnover" formControlName="turnover" placeholder="turnover">
+            <label for="turnover">turnover</label>
+            <div *ngIf="this.addCompanyForm.get('turnover').invalid && (this.addCompanyForm.get('turnover').touched)"
+                class="invalid-feedback">
+                <div *ngIf="this.addCompanyForm.get('turnover').errors?.pattern">
+                    turnover contains only numbers.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control" 
+                id="ceo" formControlName="ceo" placeholder="ceo">
+            <label for="ceo">ceo</label>
+        </div>
+
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control" 
+                id="boardOfDirectors" formControlName="boardOfDirectors" placeholder="boardOfDirectors">
+            <label for="boardOfDirectors">boardOfDirectors</label>
+            <i>(Use Commas ',' to separate names)</i>
+        </div>
+        
+        <div class="form-floating mb-3 col-md-6">
+            <textarea type="text" class="form-control" 
+                id="brief" formControlName="brief" placeholder="brief"></textarea>
+            <label for="brief">brief</label>
+        </div>
+       
+        <button class="btn btn-primary rounded-pill" [disabled]="!addCompanyForm.valid" (click)="onSubmit()">Submit</button> 
+    </div>
+    </form>
+    
+</div>
+</div>

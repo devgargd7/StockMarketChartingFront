@@ -1,0 +1,21 @@
+<!-- <button class="navbar-toggler d-sm-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button> -->
+
+ 
+
+    <nav class="nav nav-pills nav-justified " *ngIf="userType == 'ADMIN' ">
+        <a routerLink="admin/import" class="nav-link rounded-pill" routerLinkActive="active">Import Data</a>
+        <a routerLink="admin/company" class="nav-link rounded-pill" routerLinkActive="active">Manage Company</a>
+        <a routerLink="admin/exchange" class="nav-link rounded-pill" routerLinkActive="active">Manage Exchange</a>
+        <a routerLink="admin/ipo" class="nav-link rounded-pill" routerLinkActive="active">Update IPO details</a>
+        <!-- <li class="nav-item ml-auto"><a routerLink="logout" class="nav-link">Logout</a></li> -->
+    </nav>
+    <nav class="nav nav-pills nav-fill" *ngIf="userType == 'USER' ">
+        <a routerLink="user/ipo" class="nav-link rounded-pill" routerLinkActive="active">View IPOs</a>
+        <a routerLink="user/compare" class="nav-link rounded-pill" routerLinkActive="active">Compare Companies/Sectors</a>
+        <a routerLink="user/profile" class="nav-link rounded-pill" routerLinkActive="active">Profile</a>
+        <!-- <li class="nav-item ml-auto"><a routerLink="logout" class="nav-link">Logout</a></li> -->
+    </nav>
+<!-- </div>  -->
+

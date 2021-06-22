@@ -1,0 +1,42 @@
+<div class="col-md-6 offset-md-3 mt-5">
+    <div class="card">
+        <h4 class="card-header"> <i class="fa fa-lock"></i>Login</h4>
+        <div class="card-body">
+            <!-- <form> -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" [ngClass]="{ 'is-invalid': this.loginForm.get('username').invalid || submitted}"
+                        formControlName="username" id="username" placeholder="Username" required>
+                    <label for="username">Username</label>
+                    <div *ngIf="this.loginForm.get('username').invalid && (this.loginForm.get('username').dirty || this.loginForm.get('username').touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="this.loginForm.get('username').errors?.required">
+                            Username is required.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control"  [ngClass]="{ 'is-invalid': this.loginForm.get('password').invalid}"
+                        id="password" formControlName="password" placeholder="Password" required>
+                    <label for="password">Password</label>
+                    <div *ngIf="this.loginForm.get('password').invalid && (this.loginForm.get('password').dirty || this.loginForm.get('password').touched)"
+                        class="invalid-feedback">
+
+                        <div *ngIf="this.loginForm.get('password').errors?.required">
+                            Password is required.
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-dark rounded-pill" [disabled]="!loginForm.valid" >Submit</button> 
+                <!-- [disabled]="!loginForm.valid" -->
+                <!-- <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Login
+                </button>
+                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div> -->
+                
+            </form>
+            <span>New User? SignUp <a routerLink="../register">Here </a>!!!</span> 
+        </div>
+    </div>
+</div>

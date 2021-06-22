@@ -1,0 +1,48 @@
+<!-- <div  *ngIf="alert.message!=''">
+    <ngb-alert [type]="alert.type" (closed)="closeAlert()">{{ alert.message }}</ngb-alert>
+</div> -->
+<div class="card col-md-8 offset-md-2 mt-3" >
+    <div class="card-body">
+        <ng-content></ng-content>
+    <h1 class="card-title">
+        <span>ADD EXCHANGE.</span> 
+    </h1>
+
+    <form [formGroup]="addExchangeForm" >
+        <div class="row">
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control" [ngClass]="{ 'is-invalid': this.addExchangeForm.get('stockExchangeName').invalid && this.addExchangeForm.get('stockExchangeName').touched}"
+                formControlName="stockExchangeName" id="stockExchangeName" placeholder="stockExchangeName " required >
+            <label for="stockExchangeName">Stock Exchange Name</label>
+            <div *ngIf="this.addExchangeForm.get('stockExchangeName').invalid && (this.addExchangeForm.get('stockExchangeName').dirty || this.addExchangeForm.get('stockExchangeName').touched)"
+                class="invalid-feedback">
+                <div *ngIf="this.addExchangeForm.get('stockExchangeName').errors?.required">
+                    stockExchange Name is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control" 
+                id="contactAddress" formControlName="contactAddress" placeholder="contactAddress">
+            <label for="contactAddress">address</label>
+        </div>
+
+        <div class="form-floating mb-3 col-md-6">
+            <input type="text" class="form-control" 
+                id="remarks" formControlName="remarks" placeholder="remarks">
+            <label for="remarks">remarks</label>
+        </div>
+        
+        <div class="form-floating mb-3 col-md-6">
+            <textarea type="text" class="form-control" 
+                id="brief" formControlName="brief" placeholder="brief"></textarea>
+            <label for="brief">brief</label>
+        </div>
+       
+        <button class="btn btn-primary rounded-pill" [disabled]="!addExchangeForm.valid" (click)="onSubmit()">Submit</button> 
+    </div>
+    </form>
+    
+</div>
+</div>

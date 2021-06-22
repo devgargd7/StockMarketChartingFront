@@ -1,0 +1,55 @@
+<div class="card-body">
+    <h2 class="card-title">ADD/LIST COMPANIES.</h2>
+    <div class="d-flex justify-content-evenly">
+        <button type="button" class="btn btn-primary rounded-pill" (click)="getAllComapnies()">List All</button>
+        <div class="d-grid"><button type="button" class="btn btn-primary rounded-pill" (click)="addCompany()">+</button><i>Add Companies</i></div>
+    </div>
+    <app-add-company *ngIf="showCompanyForm" #addCompanyForm [update]="update" [companyToBeUpdated]="companyToBeUpdated" (successSubmission)="addCompanySuccess($event)">
+        <button type="button" class="btn btn-primary rounded-pill float-end" (click)="addCompany()">X</button>
+    </app-add-company>
+    
+
+    <div class="form-floating" >
+        <input type="text" class="form-control" id="searchCompany" placeholder="Search For Companies Here"
+         [(ngModel)]="searchCompany" (ngModelChange)="search()">
+        <label for="searchCompany">Search For Companies Here</label>
+          <!-- <span *ngFor="let company of companiesDatalist" >{{ company.companyName }}</span> -->
+    </div>
+    <div class="conatiner" *ngIf="CompanyList && CompanyList.length">
+        
+        <table class="table" >
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">companyName</th>
+                    <th scope="col">stockExchanges</th>
+                    <th scope="col">sector</th>
+                    <th scope="col">turnover</th>
+                    <th scope="col">ceo</th>
+                    <th scope="col">boardOfDirectors</th>
+                    <th scope="col">brief</th>
+                    <th scope="col">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let company of CompanyList | slice: (page-1) * pageSize : page * pageSize; let i=index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ company.companyName }}</td>
+                    <td><span *ngFor="let se of company.stockCodes">{{ se.stockExchange.stockExchangeName }},</span></td>
+                    <td>{{ company.sector.sectorName }}</td>
+                    <td>{{ company.turnover }}</td>
+                    <td>{{ company.ceo }}</td>
+                    <td>{{ company.boardOfDirectors }}</td>
+                    <td>{{ company.brief }}</td>
+                    <td><div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary" (click)="updateCompany(company)">Update</button>
+                        <button type="button" class="btn btn-outline-primary" (click)="deleteCompany(company)">Delete</button>
+                      </div></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="CompanyList.length"></ngb-pagination>
+        </div>
+    </div>
+</div>

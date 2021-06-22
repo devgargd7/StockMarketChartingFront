@@ -1,0 +1,33 @@
+<div class="card-body">
+    <h2 class="card-title">IPOs LIST.</h2>
+    <div class="conatiner" *ngIf="IPOList && IPOList.length">
+        
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">companyName</th>
+                    <th scope="col">stockExchange</th>
+                    <th scope="col">pricePerShare</th>
+                    <th scope="col">totalNumberOfShares</th>
+                    <th scope="col">openDateTime</th>
+                    <th scope="col">remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ipo of IPOList | slice: (page-1) * pageSize : page * pageSize; let i=index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ ipo.company.companyName }}</td>
+                    <td><span *ngFor="let se of ipo.stockExchanges">{{ se.stockExchangeName }}</span>,</td>
+                    <td>{{ ipo.pricePerShare }}</td>
+                    <td>{{ ipo.totalNumberOfShare }}</td>
+                    <td>{{ ipo.openDateTime[0] }}/{{ ipo.openDateTime[1] }}/{{ ipo.openDateTime[2] }} {{ ipo.openDateTime[3] }}:{{ ipo.openDateTime[4] }}:{{ ipo.openDateTime[5] }}</td>
+                    <td>{{ ipo.remarks }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="IPOList.length"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="card">
+    <dl class="row card-body">
+        <dt class="col-sm-3">Username</dt>
+        <dd class="col-sm-1">:</dd>
+        <dd class="col-sm-8">{{ currentUser.username }}</dd>
+      
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-1">:</dd>
+        <dd class="col-sm-8">{{ currentUser.email }}</dd>
+    
+        <dt class="col-sm-3">Mobile Number</dt>
+        <dd class="col-sm-1">:</dd>
+        <dd class="col-sm-8">
+            <div *ngIf="currentUser.mobileNumber; Else elseBlock">{{ currentUser.mobileNumber }}</div>
+            <ng-template #elseBlock>
+                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Add Number
+                </button>
+            </ng-template>
+            <div class="collapse" id="collapseExample">
+                <br><input type="text" [(ngModel)]="mobileNumber">
+                <button (click)="addMobileNumber()" >Add Mobile Number</button>
+            </div>
+        </dd>
+    
+        <dt class="col-sm-3">Type</dt>
+        <dd class="col-sm-1">:</dd>
+        <dd class="col-sm-8">{{ currentUser.userType }}</dd>
+    
+        <dt class="col-sm-3">Password</dt>
+        <dd class="col-sm-1">:</dd>
+        <dd class="col-sm-8">
+            <input type="password" [(ngModel)]="newPassword">
+            <button (click)="updatePassword()">Change Password</button>
+        </dd>    
+    </dl>
+</div>

@@ -1,0 +1,105 @@
+<div class="container"><div class="card">
+    
+    <div class="card-body" >
+        <h1 class="card-title">
+            <span >Add Company</span>
+        </h1>
+        <form class="form-group" [formGroup]="form" (ngSubmit)="onSubmit($event)">
+            <div class="row">
+            <div class="form-floating mb-3 col-md-6" *ngIf="compareType=='company' ">
+                <input type="text" class="form-control" list="datalistOptions" id="searchCompany" placeholder="Search For Companies Here"
+                formControlName="company" autocomplete="none">
+                <label for="searchCompany">Search For Companies Here</label>
+                <datalist id="datalistOptions">
+                    <option *ngFor="let company of companyList">{{ company.companyName }}</option>
+                </datalist>
+            </div>
+
+            <div class="form-floating mb-3 col-md-6"  *ngIf="compareType=='company' ">
+                <!-- *ngIf="stockExchangeList" -->
+                <select type="text" class="form-select" id="stockexchange" placeholder="Select StockExchange" formControlName="stockExchange">
+                    <option *ngFor="let se of stockExchangeList">{{ se.stockExchangeName }}</option>
+                </select>
+                <label for="stockexchange">stockexchange</label>
+            </div>
+
+            <div class="form-floating mb-3 col-md-6" *ngIf="compareType=='sector' ">
+                <input type="text" class="form-control" id="searchSector" placeholder="searchSector" list="sectorList"
+                formControlName="sector" autocomplete="none">
+                <label for="searchSector">Search For Sector Here</label>
+                <datalist id="sectorList" *ngFor="let sector of sectorList">
+                    <option >
+                </datalist>
+            </div>
+
+            <div class="form-floating mb-3 col-md-6 form-inline" *ngIf="periodFix.fixed==false">
+                <input class="form-control" placeholder="yyyy-mm-dd" id="fromDate"
+                       name="dp" formControlName="fromDate" ngbDatepicker #d="ngbDatepicker">
+                       <label for="fromDate">fromDate</label>
+                <!-- <div class="input-group-append"> -->
+                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                <!-- </div> -->
+            </div>
+
+            <div class="form-floating mb-3 col-md-6 form-inline" *ngIf="periodFix.fixed==false">
+                <input class="form-control" placeholder="yyyy-mm-dd" id="toDate"
+                       name="dp" formControlName="toDate" ngbDatepicker #d2="ngbDatepicker">
+                       <label for="toDate">toDate</label>
+                <!-- <div class="input-group-append"> -->
+                  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                <!-- </div> -->
+            </div> 
+
+            <select class="form-select form-control" [(ngModel)]="periodicity" [ngModelOptions]="{standalone: true}" name="periodicity" *ngIf="periodFix.fixed==false">
+                <option selected value="hourly">hourly</option>
+                <option value="daily">daily</option>
+                <option value="monthly">monthly</option>
+                <option value="yearly">yearly</option>
+              </select>
+            
+            <div *ngIf="periodFix.fixed==true"><i>*The Period and Periodicity is fixed as:
+                 From:{{ formatDate(periodFix.fromDate) }} To:{{ formatDate(periodFix.toDate) }} Periodicity:{{ periodFix.periodicity }}.
+                Reload the section to set these again.</i>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Add this</button>
+        </div>
+        </form>
+    </div>
+
+
+    <!-- <div class="card-body" *ngIf="compareType=='sector' ">
+        <h1 class="card-title">
+            <span>Add Sector</span>
+        </h1>
+        <form class="form-group" [formGroup]="form" (ngSubmit)="onSubmit($event)">
+            <div class="row">
+            <div class="form-floating mb-3 col-md-6">
+                <input type="text" class="form-control" id="searchSector" placeholder="searchSector" list="sectorList"
+                formControlName="sector" autocomplete="none">
+                <label for="searchSector">Search For Sector Here</label>
+                <datalist id="sectorList" *ngFor="let sector of sectorList">
+                    <option >
+                </datalist>
+            </div>
+            <div class="form-floating mb-3 col-md-6 form-inline">
+                <input class="form-control" placeholder="yyyy-mm-dd" id="fromDate"
+                       name="dp" formControlName="fromDate" ngbDatepicker #d="ngbDatepicker">
+                       <label for="fromDate">fromDate</label>
+                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                
+            </div>
+
+            <div class="form-floating mb-3 col-md-6 form-inline">
+                <input class="form-control" placeholder="yyyy-mm-dd" id="toDate"
+                       name="dp" formControlName="toDate" ngbDatepicker #d2="ngbDatepicker">
+                       <label for="toDate">toDate</label>
+                  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                
+                    </div>
+            <button class="btn btn-primary" type="submit">Add this</button>
+        </div>
+        </form>
+    </div> -->
+</div>
+</div>

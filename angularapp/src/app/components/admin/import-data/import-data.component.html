@@ -1,0 +1,55 @@
+
+    <div class="card-body">
+        <h2 class="card-title">IMPORT DATA.</h2>
+        <div class="d-flex justify-content-between p-2">
+            <label for="file">Select an Excel File to be uploaded:</label>
+            <input class="form-control w-50" type="file" id="file" accept=".xlsx" (change)="onFileChange($event)">
+            
+            <!-- <input type="file" placeholder="Upload file" accept=".xlsx" id="file"  -->
+                   <!-- (change)="onFileChange($event)"> -->
+            <div>
+                <button type="button" class="btn btn-outline-primary" *ngIf="fileSelected" (click)="Upload()">
+                    <i [ngClass]="{'bi bi-cloud-arrow-up text-info': !importedData }"></i>
+                    <i [ngClass]="{'bi bi-cloud-check text-success': importedData }"></i>
+                    Upload
+                </button>
+            </div>
+            <!--  -->
+        </div>
+        <div class="conatiner" *ngIf="importData && fileSelected">
+            <span class='float-end fst-italic fw-light'>Click <b>Upload</b> to import the Data.</span>
+            <h2>Data to be imported:</h2>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Company Code</th>
+                        <th scope="col">Stock Exchange</th>
+                        <th scope="col">Price Per Share</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col" *ngIf="importedData">Imported?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of importData | slice: (page-1) * pageSize : page * pageSize; let i=index">
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ item.companyCode }}</td>
+                        <td>{{ item.stockExchange }}</td>
+                        <td>{{ item.pricePerShare | currency:'INR':'symbol':'1.2-2' }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.time }}</td>
+                        <td *ngIf="importedData">
+                            <!-- {{ importedData[i] }} -->
+                            <span *ngIf="importedData[i]"><i class="bi bi-check-lg text-success"></i></span>
+                            <span *ngIf="!importedData[i]"><i class="bi bi-x-lg text-danger" fill="currentColor"></i></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="importData.length"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+<!-- </div> -->

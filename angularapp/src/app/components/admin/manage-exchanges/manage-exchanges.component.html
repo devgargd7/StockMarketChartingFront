@@ -1,0 +1,55 @@
+<div class="card-body">
+    <h2 class="card-title">ADD/LIST EXCHANGES.</h2>
+    <div class="d-flex justify-content-evenly">
+        <button type="button" class="btn btn-primary rounded-pill" (click)="getAllexchanges()">List All</button>
+        <div class="d-grid"><button type="button" class="btn btn-primary rounded-pill" (click)="addExchange()">+</button><i>Add Exchanges</i></div>
+    </div>
+    <app-add-stock-exchange *ngIf="showExchangeForm" #addExchangeForm>
+        <button type="button" class="btn btn-primary rounded-pill float-end" (click)="addExchange()">X</button>
+    </app-add-stock-exchange>
+    
+
+    <div class="form-floating" >
+        <!-- <input list="seDatalist" class="form-control" id="searchExchanges" placeholder="Search For Exchanges Here" required>
+        <label for="searchExchanges">Search For Exchanges Here</label> -->
+        <input type="text" class="form-control" id="searchExchange" placeholder="Search For Exchanges Here"
+            [(ngModel)]="searchExchange" (ngModelChange)="search()">
+        <label for="searchExchange">Search For Exchanges Here</label>
+    </div>
+    
+    <div class="conatiner" *ngIf="ExchangeList && ExchangeList.length">
+        
+        <table class="table" >
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">stockExchangeName</th>
+                    <th scope="col">brief</th>
+                    <th scope="col">address</th>
+                    <th scope="col">remarks</th>
+                    <th scope="col">actions</th>
+                    <!-- <th scope="col">actions</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let exchange of ExchangeList | slice: (page-1) * pageSize : page * pageSize; let i=index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ exchange.stockExchangeName }}</td>
+                    <td>{{ exchange.brief }}</td>
+                    <td>{{ exchange.contactAddress }}</td>
+                    <td>{{ exchange.remarks }}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary" (click)="deleteExchange(exchange)">Delete</button>
+                    </td>
+                    <!-- <td><div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary" (click)="updateCompany(company)">Update</button>
+                        <button type="button" class="btn btn-outline-primary">Delete</button>
+                      </div></td> -->
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="ExchangeList.length"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<header class="sticky-top mb-2 shadow-md">
+    <div class="container pt-4 pb-1" id="header">
+        <div class="text-center"><a id="logo" routerLink="">StockMarketCharting</a></div>
+        <div class="auth-buttons text-center float-end" *ngIf="currentUser; else elseBlock">
+            <a routerLink="logout" (click)="logout()" class="btn btn-outline-dark rounded-pill">Logout</a>
+        </div>
+        <ng-template #elseBlock><div class="auth-buttons text-center float-end ">
+            <a routerLink="login" class="btn btn-outline-dark rounded-pill" routerLinkActive="active">Login</a>
+            <a routerLink="register" class="btn btn-outline-dark rounded-pill " routerLinkActive="active">Register</a>
+        </div></ng-template>
+    </div>
+</header>
+
+<div>  
+    <button class="btn btn-outline-dark d-sm-none float-start" id="sideNavBtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#topBar" aria-controls="topBar" *ngIf="currentUser">
+        <span>&#9776;</span>
+    </button>
+    <div class="offcanvas offcanvas-bottom" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="topBar" style="max-height:15%;" *ngIf="currentUser">
+        <label type="button" class="btn-close text-reset w-100" data-bs-dismiss="offcanvas" aria-label="Close" id="sideNavCloseBtn"></label>    
+        <div class="offcanvas-body">
+            <app-navbar></app-navbar>
+        </div>
+      </div>
+    <div class="container d-flex overflow-hidden shadow-sm p-1 mb-3 bg-body rounded d-none d-sm-block" id="navbar" *ngIf="currentUser">
+    <app-navbar></app-navbar>
+    </div>
+    <div class="container" style="min-height:70vh;">
+        <div class="card pb-3" style="min-height: 70vh">
+        <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
